@@ -23,6 +23,9 @@
 # misc
 .DS_Store
 *.pem
+.serena/
+public/uploads/
+public/generations/
 
 # debug
 npm-debug.log*

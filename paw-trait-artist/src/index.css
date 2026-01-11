@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 20 14% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 20 14% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14% 20%;
+
+    /* Coral Orange - Main brand color */
+    --primary: 12 88% 65%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 12 90% 75%;
+    
+    /* Soft Pink - Secondary accent */
+    --secondary: 340 75% 85%;
+    --secondary-foreground: 340 80% 30%;
+
+    /* Mint Green - Tertiary accent */
+    --accent: 160 60% 75%;
+    --accent-foreground: 160 65% 25%;
+
+    --muted: 20 10% 96%;
+    --muted-foreground: 20 8% 45%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 20 10% 90%;
+    --input: 20 10% 90%;
+    --ring: 12 88% 65%;
+
+    --radius: 1rem;
+
+    /* Gradients */
+    --gradient-warm: linear-gradient(135deg, hsl(12 88% 65%), hsl(340 75% 75%));
+    --gradient-soft: linear-gradient(180deg, hsl(0 0% 100%), hsl(20 10% 98%));
+    
+    /* Glass effect */
+    --glass-bg: hsla(0, 0%, 100%, 0.7);
+    --glass-border: hsla(20, 10%, 90%, 0.5);
+
+    /* Shadows */
+    --shadow-soft: 0 10px 40px -10px hsl(12 88% 65% / 0.15);
+    --shadow-card: 0 4px 20px -4px hsl(20 14% 20% / 0.08);
+
+    /* Animation */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 20 14% 8%;
+    --foreground: 0 0% 95%;
+
+    --card: 20 14% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 20 14% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 12 88% 65%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 12 90% 55%;
+
+    --secondary: 340 60% 35%;
+    --secondary-foreground: 340 75% 90%;
+
+    --accent: 160 50% 35%;
+    --accent-foreground: 160 60% 90%;
+
+    --muted: 20 10% 15%;
+    --muted-foreground: 20 8% 60%;
+
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 20 10% 18%;
+    --input: 20 10% 18%;
+    --ring: 12 88% 65%;
+
+    --glass-bg: hsla(20, 14%, 10%, 0.7);
+    --glass-border: hsla(20, 10%, 30%, 0.5);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

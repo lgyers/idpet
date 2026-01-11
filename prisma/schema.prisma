@@ -1,0 +1,191 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+
+  // User profile
+  subscriptions UserSubscription[]
+  generationRecords GenerationRecord[]
+  communitySubmissions CommunitySubmission[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  password          String?
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@id([identifier, token])
+  @@map("verificationtokens")
+}
+
+// Subscription Management
+model UserSubscription {
+  id                    String    @id @default(cuid())
+  userId                String    @unique
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  tier                  String    @default("free") // "free" | "premium"
+  quotaMonth            Int       @default(3) // Monthly generation quota
+  quotaResetDate        DateTime  @default(now())
+
+  stripeCustomerId      String?   @unique
+  stripeSubscriptionId  String?   @unique
+
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  expiresAt             DateTime?
+
+  @@map("user_subscriptions")
+}
+
+// Scene Templates
+model SceneTemplate {
+  id              String    @id @default(cuid())
+  category        String    // "professional" | "culture" | "document"
+  name            String
+  description     String
+  thumbnail       String
+  basePrompt      String    @db.Text
+  usageCount      Int       @default(0)
+
+  generationRecords GenerationRecord[]
+  communitySubmissions CommunitySubmission[]
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([category])
+  @@map("scene_templates")
+}
+
+// Generation Records
+model GenerationRecord {
+  id                String    @id @default(cuid())
+  userId            String
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  uploadedPhotoUrl  String
+  template          SceneTemplate @relation(fields: [templateId], references: [id])
+  templateId        String
+
+  resultImageUrl    String
+  generatedPrompt   String    @db.Text
+
+  quotaUsed         Int       @default(1)
+
+  createdAt         DateTime  @default(now())
+
+  @@index([userId, createdAt])
+  @@index([templateId])
+  @@map("generation_records")
+}
+
+// Blog Posts
+model BlogPost {
+  id              String    @id @default(cuid())
+  title           String
+  slug            String    @unique
+  excerpt         String
+  content         String    @db.Text
+  thumbnail       String?
+  category        String    // "tutorial" | "case-study" | "feature" | "news"
+
+  published       Boolean   @default(false)
+  publishedAt     DateTime?
+
+  author          String    @default("PetPhoto Team")
+  readTime        Int?      // Reading time in minutes
+
+  viewCount       Int       @default(0)
+  likes           Int       @default(0)
+
+  seoTitle        String?
+  seoDescription  String?
+  seoKeywords     String?
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([publishedAt])
+  @@map("blog_posts")
+}
+
+// Community Submissions
+model CommunitySubmission {
+  id              String    @id @default(cuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title           String
+  description     String
+  imageUrl        String
+  petName         String
+  petBreed        String?
+
+  templateId      String
+  template        SceneTemplate @relation(fields: [templateId], references: [id])
+
+  approved        Boolean   @default(false)
+  featured        Boolean   @default(false)
+
+  likes           Int       @default(0)
+  views           Int       @default(0)
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([templateId])
+  @@index([approved])
+  @@index([featured])
+  @@map("community_submissions")
+}

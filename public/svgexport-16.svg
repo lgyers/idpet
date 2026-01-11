@@ -1,0 +1,34 @@
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="svg334867" viewBox="0 0 1024 768" height="768" width="1024" version="1.1">
+  <metadata id="metadata334873" fill="#FFFFFF">
+    <rdf:rdf fill="#FFFFFF">
+      <cc:work rdf:about="" fill="#FFFFFF">
+        <dc:format fill="#FFFFFF">image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" fill="#FFFFFF"></dc:type>
+      </cc:work>
+    </rdf:rdf>
+  </metadata>
+  <defs id="defs334871"></defs>
+  <linearGradient spreadMethod="pad" y2="30%" x2="-10%" y1="120%" x1="30%" id="3d_gradient2-logo-c143e688-a372-4c3f-bc3e-34bedb5eb27c" fill="#FFFFFF">
+    <stop id="stop334848" stop-opacity="1" stop-color="#ffffff" offset="0%" fill="#FFFFFF"></stop>
+    <stop id="stop334850" stop-opacity="1" stop-color="#000000" offset="100%" fill="#FFFFFF"></stop>
+  </linearGradient>
+  <linearGradient gradientTransform="rotate(-30)" spreadMethod="pad" y2="30%" x2="-10%" y1="120%" x1="30%" id="3d_gradient3-logo-c143e688-a372-4c3f-bc3e-34bedb5eb27c" fill="#FFFFFF">
+    <stop id="stop334853" stop-opacity="1" stop-color="#ffffff" offset="0%" fill="#FFFFFF"></stop>
+    <stop id="stop334855" stop-opacity="1" stop-color="#cccccc" offset="50%" fill="#FFFFFF"></stop>
+    <stop id="stop334857" stop-opacity="1" stop-color="#000000" offset="100%" fill="#FFFFFF"></stop>
+  </linearGradient>
+  <g id="logo-group" fill="#FFFFFF">
+    <image xlink:href="" id="container" x="272" y="144" width="480" height="480" style="display: none;" transform="translate(0 0)" fill="#FFFFFF"></image>
+    <g id="logo-center" transform="translate(175.72013200000004 0)" fill="#FFFFFF">
+      <image xlink:href="" id="icon_container" style="display: none;" x="0" y="0" fill="#FFFFFF"></image>
+      <g id="slogan" style="font-style:normal;font-weight:normal;font-size:32px;line-height:1;font-family:'Brandmark Stencil 1';font-variant-ligatures:none;text-align:center;text-anchor:middle" transform="translate(0 0)" fill="#FFFFFF"></g>
+      <g id="title" style="font-style:normal;font-weight:normal;font-size:72px;line-height:1;font-family:'Brandmark Stencil 1';font-variant-ligatures:normal;text-align:center;text-anchor:middle" transform="translate(0 0)" fill="#FFFFFF">
+        <path id="path334876" style="font-style:normal;font-weight:normal;font-size:72px;line-height:1;font-family:'Brandmark Stencil 1';font-variant-ligatures:normal;text-align:center;text-anchor:middle" d="m 414.80619,-49.608 c -0.648,0 -1.224,0.504 -1.224,1.224 v 47.232 c 0,0.648 0.576,1.152 1.224,1.152 0.648,0 1.224,-0.504 1.224,-1.152 v -47.232 c 0,-0.72 -0.576,-1.224 -1.224,-1.224 z" stroke-width="0px" stroke-linejoin="miter" stroke-miterlimit="2" fill="#DC3123" stroke="#DC3123" transform="translate(0 353.8432) translate(50 -39.294399999999975) scale(2.8) translate(-413.58219 49.608)"></path>
+        <path id="path334878" style="font-style:normal;font-weight:normal;font-size:72px;line-height:1;font-family:'Brandmark Stencil 1';font-variant-ligatures:normal;text-align:center;text-anchor:middle" d="m 452.86606,-49.608 h -13.104 c -0.648,0 -1.224,0.504 -1.224,1.224 0,0.648 0.576,1.224 1.224,1.224 h 13.104 c 12.312,0 22.392,10.008 22.392,22.392 0,5.976 -2.376,11.592 -6.552,15.84 -4.248,4.176 -9.864,6.552 -15.84,6.552 h -13.104 c -0.648,0 -1.224,0.504 -1.224,1.224 0,0.648 0.576,1.152 1.224,1.152 h 13.104 c 6.624,0 12.816,-2.52 17.496,-7.272 4.752,-4.68 7.272,-10.872 7.272,-17.496 0,-13.68 -11.088,-24.84 -24.768,-24.84 z m -14.184,42.192 c 0,0.72 0.576,1.224 1.224,1.224 0.72,0 1.224,-0.504 1.224,-1.224 v -34.776 c 0,-0.648 -0.504,-1.224 -1.224,-1.224 -0.648,0 -1.224,0.576 -1.224,1.224 z" stroke-width="0px" stroke-linejoin="miter" stroke-miterlimit="2" fill="#E5581D" stroke="#E5581D" transform="translate(0 353.8432) translate(119.8764359999999 -39.294399999999975) scale(2.8) translate(-438.53806 49.608)"></path>
+        <path id="path334880" style="font-style:normal;font-weight:normal;font-size:72px;line-height:1;font-family:'Brandmark Stencil 1';font-variant-ligatures:normal;text-align:center;text-anchor:middle" d="m 497.77494,-49.608 c -0.648,0 -1.224,0.504 -1.224,1.224 v 47.232 c 0,0.648 0.576,1.152 1.224,1.152 0.648,0 1.224,-0.504 1.224,-1.152 v -47.232 c 0,-0.72 -0.576,-1.224 -1.224,-1.224 z m 4.968,26.856 c 0,0.648 0.576,1.152 1.224,1.152 h 10.008 c 7.704,0.072 14.04,-6.264 14.04,-13.968 0,-7.776 -6.336,-14.04 -14.04,-14.04 h -10.008 c -0.648,0 -1.224,0.504 -1.224,1.224 0,0.648 0.576,1.224 1.224,1.224 h 10.008 c 6.408,-0.072 11.592,5.184 11.592,11.592 0,6.336 -5.184,11.592 -11.592,11.592 h -10.008 c -0.648,0 -1.224,0.504 -1.224,1.224 z" stroke-width="0px" stroke-linejoin="miter" stroke-miterlimit="2" fill="#ED7F17" stroke="#ED7F17" transform="translate(0 353.8432) translate(282.3125 -39.294399999999975) scale(2.8) translate(-496.55094 49.608)"></path>
+        <path id="path334882" style="font-style:normal;font-weight:normal;font-size:72px;line-height:1;font-family:'Brandmark Stencil 1';font-variant-ligatures:normal;text-align:center;text-anchor:middle" d="m 616.91581,-49.608 h -75.312 c -0.648,0 -1.224,0.504 -1.224,1.224 0,0.648 0.576,1.224 1.224,1.224 h 75.312 c 0.648,0 1.152,-0.576 1.152,-1.224 0,-0.72 -0.504,-1.224 -1.152,-1.224 z m -76.536,48.456 c 0,0.648 0.576,1.152 1.224,1.152 h 27.648 c 0.648,0 1.224,-0.504 1.224,-1.152 0,-0.72 -0.576,-1.224 -1.224,-1.224 h -27.648 c -0.648,0 -1.224,0.504 -1.224,1.224 z m 0,-24.408 c 0,0.648 0.576,1.224 1.224,1.224 h 27.144 c 0.648,0 1.224,-0.576 1.224,-1.224 0,-0.648 -0.576,-1.224 -1.224,-1.224 h -27.144 c -0.648,0 -1.224,0.576 -1.224,1.224 z m 57.312,24.408 c 0,0.648 0.576,1.152 1.224,1.152 0.72,0 1.224,-0.504 1.224,-1.152 v -40.752 c 0,-0.72 -0.504,-1.224 -1.224,-1.224 -0.648,0 -1.224,0.504 -1.224,1.224 z" stroke-width="0px" stroke-linejoin="miter" stroke-miterlimit="2" fill="#F6A611" stroke="#F6A611" transform="translate(0 353.8432) translate(405.03333599999996 -39.294399999999975) scale(2.8) translate(-540.37981 49.608)"></path>
+      </g>
+      <image xlink:href="" id="icon" style="display: none;" x="0" y="0" fill="#FFFFFF"></image>
+    </g>
+  </g>
+</svg>
