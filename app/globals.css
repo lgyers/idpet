@@ -95,6 +95,10 @@
     --warning: #fbbf24;
     --error: #f87171;
 
+    --card: #111827;
+    --card-foreground: #f1f5f9;
+    --gradient-soft: linear-gradient(180deg, #0f172a, #020617);
+
     /* Glass effect tokens (dark) */
     --glass-bg: hsla(20, 14%, 10%, 0.7);
     --glass-border: hsla(20, 10%, 30%, 0.5);
