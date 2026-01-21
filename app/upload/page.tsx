@@ -13,6 +13,13 @@ export default function UploadPage() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
+  const maxUploadBytes = 20 * 1024 * 1024;
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/auth/login");
+    }
+  }, [status, router]);
 
   useEffect(() => {
     if (uploadedImage) {
@@ -22,23 +29,6 @@ export default function UploadPage() {
       return () => clearTimeout(timer);
     }
   }, [uploadedImage, router]);
-
-  // 检查认证状态
-  if (status === "loading") {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[image:var(--gradient-soft)]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[hsl(var(--brand-coral))] mx-auto"></div>
-          <p className="mt-4 text-muted-foreground">加载中...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (status === "unauthenticated") {
-    router.push("/auth/login");
-    return null;
-  }
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -50,9 +40,9 @@ export default function UploadPage() {
       return;
     }
 
-    // 验证文件大小 (最大 10MB)
-    if (file.size > 10 * 1024 * 1024) {
-      setError("文件大小不能超过 10MB");
+    // 验证文件大小 (最大 20MB)
+    if (file.size > maxUploadBytes) {
+      setError("文件大小不能超过 20MB");
       return;
     }
 
@@ -75,7 +65,7 @@ export default function UploadPage() {
       } else {
         setUploadedImage(data.url);
       }
-    } catch (err) {
+    } catch {
       setError("上传失败，请重试");
     } finally {
       setUploading(false);
@@ -88,14 +78,24 @@ export default function UploadPage() {
       "image/*": [".png", ".jpg", ".jpeg", ".webp"],
     },
     maxFiles: 1,
+    maxSize: maxUploadBytes,
     disabled: uploading,
   });
 
-  const handleContinue = () => {
-    if (uploadedImage) {
-      router.push(`/generate?image=${encodeURIComponent(uploadedImage)}`);
-    }
-  };
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[image:var(--gradient-soft)]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[hsl(var(--brand-coral))] mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">加载中...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (status === "unauthenticated") {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-[image:var(--gradient-soft)] py-12 px-4">
@@ -143,7 +143,7 @@ export default function UploadPage() {
                     {isDragActive ? "松开鼠标上传文件" : "拖拽图片到此处或点击上传"}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    支持 PNG, JPG, JPEG, WebP 格式，最大 10MB
+                    支持 PNG, JPG, JPEG, WebP 格式，最大 20MB
                   </p>
                 </div>
               </div>

@@ -3,21 +3,21 @@
 import { useEffect, useRef, useState } from "react";
 
 const leftColumn = [
-  { image: "/assets/gallery-doctor.jpg", label: "医生" },
-  { image: "/assets/gallery-musician.jpg", label: "音乐家" },
-  { image: "/assets/gallery-firefighter.jpg", label: "消防员" },
+  { image: "/assets/examples/haimati/blue-id/cat-zhonghua-tianyuan-v1.png", label: "蓝底证件照" },
+  { image: "/assets/examples/haimati/doctor/cat-zhonghua-tianyuan-v1.png", label: "医生职业照" },
+  { image: "/assets/examples/haimati/white-collar/cat-ragdoll-v1.png", label: "白领西装照" },
 ];
 
 const centerColumn = [
-  { image: "/assets/gallery-pilot.jpg", label: "飞行员" },
-  { image: "/assets/gallery-model.jpg", label: "时尚模特" },
-  { image: "/assets/gallery-teacher.jpg", label: "教师" },
+  { image: "/assets/examples/haimati/graduation/cat-siamese-v1.png", label: "学士服毕业照" },
+  { image: "/assets/examples/haimati/oriental-aesthetic/cat-ragdoll-v1.png", label: "东方美学古韵风" },
+  { image: "/assets/examples/haimati/tangzhuang/cat-ragdoll-v1.png", label: "唐装" },
 ];
 
 const rightColumn = [
-  { image: "/assets/gallery-artist.jpg", label: "艺术家" },
-  { image: "/assets/gallery-scientist.jpg", label: "科学家" },
-  { image: "/assets/gallery-police.jpg", label: "警察" },
+  { image: "/assets/examples/haimati/wedding/cat-ragdoll-v1.png", label: "婚纱摄影" },
+  { image: "/assets/examples/haimati/golden-wedding/cat-siamese-v1.png", label: "金婚照" },
+  { image: "/assets/examples/haimati/ironman/cat-zhonghua-tianyuan-v1.png", label: "漫威钢铁侠" },
 ];
 
 const StickyFeatures = () => {
@@ -46,7 +46,7 @@ const StickyFeatures = () => {
             创意照片画廊
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            探索无限可能，让你的宠物成为任何角色
+            从证件照到婚纱与英雄主题，风格一步到位
           </p>
         </div>
 

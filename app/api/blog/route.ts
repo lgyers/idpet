@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get("search");
 
     const skip = (page - 1) * limit;
-    const where: any = {
+    const where: Prisma.BlogPostWhereInput = {
       published: true,
     };
 

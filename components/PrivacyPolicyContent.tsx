@@ -4,13 +4,13 @@ import { motion } from "framer-motion";
 
 export function PrivacyPolicyContent() {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+        <div className="min-h-screen bg-[image:var(--gradient-soft)]">
             <div className="container mx-auto px-4 py-16 max-w-4xl">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="bg-white rounded-2xl shadow-lg p-8 md:p-12"
+                    className="bg-[hsl(var(--glass-bg))] backdrop-blur-md border border-[hsl(var(--glass-border))] rounded-2xl shadow-card p-8 md:p-12 dark:[&_.text-gray-900]:text-foreground dark:[&_.text-gray-600]:text-muted-foreground dark:[&_.text-gray-500]:text-muted-foreground"
                 >
                     <h1 className="text-4xl font-bold text-gray-900 mb-8">隐私政策</h1>
 
@@ -22,7 +22,7 @@ export function PrivacyPolicyContent() {
                         <section className="mb-8">
                             <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. 概述</h2>
                             <p className="text-gray-600 mb-4">
-                                PetPhoto AI（以下简称"我们"）重视您的隐私，并致力于保护您的个人信息。本隐私政策说明了我们如何收集、使用、披露和保护您的信息。
+                                PetPhoto AI（以下简称“我们”）重视您的隐私，并致力于保护您的个人信息。本隐私政策说明了我们如何收集、使用、披露和保护您的信息。
                             </p>
                             <p className="text-gray-600">
                                 使用我们的服务即表示您同意本隐私政策的条款。

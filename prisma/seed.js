@@ -3,24 +3,94 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 const templates = [
-  { category: 'document', name: '身份证照（蓝色背景）', description: '标准证件照蓝色背景', thumbnail: '/assets/gallery-model.jpg', basePrompt: 'ID photo, blue background, centered, neutral expression, high quality' },
-  { category: 'document', name: '工作证照（正式风格）', description: '正式着装的工作证照片', thumbnail: '/assets/gallery-model.jpg', basePrompt: 'Work badge photo, formal attire, plain background, professional lighting' },
-  { category: 'document', name: '护照照（国际标准）', description: '符合国际标准的护照照片', thumbnail: '/assets/gallery-model.jpg', basePrompt: 'Passport photo, neutral expression, plain white background, evenly lit' },
-  { category: 'document', name: '学生证照（青春风格）', description: '青春活力的学生证照片', thumbnail: '/assets/gallery-model.jpg', basePrompt: 'Student ID photo, youthful style, clean background, soft lighting' },
-  { category: 'professional', name: '医生', description: '白大褂与听诊器', thumbnail: '/assets/gallery-doctor.jpg', basePrompt: 'Pet as doctor, white coat, stethoscope, hospital background, professional medical style' },
-  { category: 'professional', name: '消防员', description: '消防服与头盔', thumbnail: '/assets/gallery-firefighter.jpg', basePrompt: 'Pet as firefighter, turnout gear, helmet, action pose, fire station backdrop' },
-  { category: 'professional', name: '宇航员', description: '宇航服与太空背景', thumbnail: '/assets/pet-astronaut.jpg', basePrompt: 'Pet as astronaut, space suit, galaxy background, futuristic style' },
-  { category: 'professional', name: '律师', description: '法袍与公文包', thumbnail: '/assets/gallery-artist.jpg', basePrompt: 'Pet as lawyer, robe, briefcase, court background, formal style' },
-  { category: 'professional', name: '警察', description: '警服与徽章', thumbnail: '/assets/gallery-police.jpg', basePrompt: 'Pet as police officer, uniform, badge, city street backdrop' },
-  { category: 'professional', name: '飞行员', description: '制服与墨镜', thumbnail: '/assets/gallery-pilot.jpg', basePrompt: 'Pet as pilot, aviation uniform, sunglasses, airport background' },
-  { category: 'professional', name: '厨师', description: '厨师服与帽子', thumbnail: '/assets/pet-chef.jpg', basePrompt: 'Pet as chef, kitchen background, chef hat, cooking utensils' },
-  { category: 'professional', name: '工程师', description: '工作服与安全帽', thumbnail: '/assets/gallery-scientist.jpg', basePrompt: 'Pet as engineer, workwear, hard hat, workshop or lab background' },
-  { category: 'culture', name: '古装', description: '汉服或旗袍', thumbnail: '/assets/pet-traditional.jpg', basePrompt: 'Pet in traditional Chinese clothing, elegant, classical background' },
-  { category: 'culture', name: '和服', description: '日本传统服饰', thumbnail: '/assets/gallery-artist.jpg', basePrompt: 'Pet in traditional Japanese kimono, peaceful garden background' },
-  { category: 'culture', name: '韩服', description: '韩国传统服饰', thumbnail: '/assets/gallery-artist.jpg', basePrompt: 'Pet in traditional Korean hanbok, cultural backdrop' },
-  { category: 'culture', name: '朝代风格', description: '唐宋元明清典雅造型', thumbnail: '/assets/pet-traditional.jpg', basePrompt: 'Pet in historical Chinese dynasty style, refined, period setting' },
-  { category: 'culture', name: '民族服饰', description: '民族特色服装', thumbnail: '/assets/gallery-artist.jpg', basePrompt: 'Pet in ethnic costumes, colorful, cultural patterns, festival mood' },
-  { category: 'culture', name: '时代穿越', description: '70/80/90 年代风', thumbnail: '/assets/gallery-model.jpg', basePrompt: 'Pet in retro 70s/80s/90s style, nostalgic background, vintage tones' },
+  {
+    category: 'haimati',
+    name: '百天照',
+    description: '温柔童趣的百天纪念肖像',
+    thumbnail: '/assets/examples/haimati/baityanzhao/cat-siamese-v1.png',
+    basePrompt:
+      '百天照风格宠物肖像，婴儿百天纪念照氛围；可爱干净布景（奶油白/浅粉/浅蓝），柔光棚拍，浅景深，皮毛细节清晰；适度小道具（帽子/围兜/小毯子）但不遮挡脸部；保持宠物原始身份特征（脸型、毛色、花纹不变）；photorealistic，high quality；no text, no watermark, no logo, no extra limbs',
+  },
+  {
+    category: 'document',
+    name: '蓝底证件照',
+    description: '标准证件照蓝色背景',
+    thumbnail: '/assets/examples/haimati/blue-id/cat-zhonghua-tianyuan-v1.png',
+    basePrompt:
+      '证件照风格宠物头像照，纯蓝背景，正面居中，头肩构图，光线均匀无阴影，细节清晰；保持宠物原始身份特征（脸型、毛色、花纹不变）；photorealistic；no text, no watermark, no logo, no extra limbs',
+  },
+  {
+    category: 'professional',
+    name: '医生职业照',
+    description: '白大褂与听诊器的职业肖像',
+    thumbnail: '/assets/examples/haimati/doctor/cat-zhonghua-tianyuan-v1.png',
+    basePrompt:
+      '医生职业照风格宠物肖像；穿白大褂，佩戴听诊器，背景为干净明亮的医院/诊室虚化场景；专业棚拍布光（主光+轮廓光），眼神有高光；保持宠物原始身份特征（脸型、毛色、花纹不变）；photorealistic，high detail；no text, no watermark, no logo, no extra limbs',
+  },
+  {
+    category: 'professional',
+    name: '学士服毕业照',
+    description: '学士服与毕业氛围',
+    thumbnail: '/assets/examples/haimati/graduation/cat-siamese-v1.png',
+    basePrompt:
+      '学士服毕业照风格宠物肖像；穿学士服与学位帽，背景为校园/毕业典礼虚化场景，色彩明快；棚拍质感，浅景深，皮毛细节清晰；保持宠物原始身份特征（脸型、毛色、花纹不变）；photorealistic，high quality；no text, no watermark, no logo, no extra limbs',
+  },
+  {
+    category: 'culture',
+    name: '唐装',
+    description: '传统唐装造型与喜庆氛围',
+    thumbnail: '/assets/examples/haimati/tangzhuang/cat-ragdoll-v1.png',
+    basePrompt:
+      '唐装风格宠物肖像；穿精致唐装（立领、盘扣、织纹），配色典雅喜庆；背景为简洁中式元素（屏风/窗棂/灯笼虚化），暖色柔光，质感高级；保持宠物原始身份特征（脸型、毛色、花纹不变）；photorealistic；no text, no watermark, no logo, no extra limbs',
+  },
+  {
+    category: 'professional',
+    name: '白领西装照',
+    description: '商务正装的职业形象照',
+    thumbnail: '/assets/examples/haimati/white-collar/cat-ragdoll-v1.png',
+    basePrompt:
+      '白领西装照风格宠物肖像；合身西装+衬衫+领带/领结，背景为干净商务灰/浅色渐变或写字楼虚化；棚拍布光，细节清晰，整体克制高级；保持宠物原始身份特征（脸型、毛色、花纹不变）；photorealistic，high quality；no text, no watermark, no logo, no extra limbs',
+  },
+  {
+    category: 'culture',
+    name: '日系可爱风',
+    description: '清新软萌的日系写真',
+    thumbnail: '/assets/examples/haimati/japanese-kawaii/cat-siamese-v1.png',
+    basePrompt:
+      '日系可爱风宠物写真；清新低饱和配色，柔和自然光，少量可爱小道具点缀（小花、小背包、糖果色布景）；构图干净，浅景深，毛发细节清晰；保持宠物原始身份特征（脸型、毛色、花纹不变）；photorealistic；no text, no watermark, no logo, no extra limbs',
+  },
+  {
+    category: 'culture',
+    name: '东方美学古韵风',
+    description: '古韵留白与东方审美',
+    thumbnail: '/assets/examples/haimati/oriental-aesthetic/cat-ragdoll-v1.png',
+    basePrompt:
+      '东方美学古韵风宠物肖像；含蓄留白构图，雅致色调（米白、墨色、黛青），柔和光线；背景可见淡雅山水/宣纸纹理/屏风虚化但不抢主体；保持宠物原始身份特征（脸型、毛色、花纹不变）；photorealistic，high detail；no text, no watermark, no logo, no extra limbs',
+  },
+  {
+    category: 'haimati',
+    name: '婚纱摄影',
+    description: '浪漫婚礼氛围大片',
+    thumbnail: '/assets/examples/haimati/wedding/cat-ragdoll-v1.png',
+    basePrompt:
+      '婚纱摄影风格宠物写真；浪漫柔光，轻微逆光与轮廓光，背景为婚礼布景/花艺虚化；整体高级、干净、电影感；保持宠物原始身份特征（脸型、毛色、花纹不变）；photorealistic，high quality；no text, no watermark, no logo, no extra limbs',
+  },
+  {
+    category: 'haimati',
+    name: '金婚照',
+    description: '金色纪念与温暖质感',
+    thumbnail: '/assets/examples/haimati/golden-wedding/cat-siamese-v1.png',
+    basePrompt:
+      '金婚照风格纪念肖像；温暖金色调，柔光棚拍，背景干净带轻微金色点缀（光斑/丝绒/花艺虚化）；氛围庄重温馨；保持宠物原始身份特征（脸型、毛色、花纹不变）；photorealistic；no text, no watermark, no logo, no extra limbs',
+  },
+  {
+    category: 'haimati',
+    name: '漫威钢铁侠',
+    description: '科幻机甲英雄质感',
+    thumbnail: '/assets/examples/haimati/ironman/cat-zhonghua-tianyuan-v1.png',
+    basePrompt:
+      '漫威钢铁侠风格宠物肖像；穿钢铁侠机甲风格战衣，金红配色，金属质感强，科技光效与能量反应堆发光；背景为科幻城市/机库虚化，戏剧性光影；保持宠物原始身份特征（脸型、毛色、花纹不变）；cinematic, photorealistic, high detail；no text, no watermark, no logo, no extra limbs',
+  },
 ]
 
 const blogPosts = [

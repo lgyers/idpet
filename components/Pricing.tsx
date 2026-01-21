@@ -4,44 +4,37 @@ import { Check } from "lucide-react";
 
 const plans = [
   {
-    name: "体验版",
-    price: "19",
-    description: "适合初次尝试的宠物主人",
+    name: "注册用户",
+    price: "0",
+    description: "适合先体验再决定的用户",
     features: [
-      "5 张 AI 创意照片",
-      "2 种风格选择",
-      "标准画质输出",
-      "3 天交付",
-      "基础客服支持",
+      "每日赠送 1 积分（当日有效）",
+      "1K（标准模型）：1 积分/张",
+      "可使用基础模板与功能",
     ],
     popular: false,
   },
   {
-    name: "标准版",
-    price: "49",
-    description: "最受欢迎的套餐选择",
+    name: "基础会员",
+    price: "9.9",
+    description: "¥9.9 起步，适合轻度使用",
     features: [
-      "20 张 AI 创意照片",
-      "5 种风格选择",
-      "高清画质输出",
-      "1 天交付",
-      "优先客服支持",
-      "免费重制 1 次",
+      "每月赠送 20 积分",
+      "1K（标准模型）：1 积分/张",
+      "2K：4 积分/张；4K：5 积分/张",
+      "会员专享：可加购积分",
     ],
     popular: true,
   },
   {
-    name: "专业版",
-    price: "99",
-    description: "适合追求极致品质的用户",
+    name: "Pro 会员",
+    price: "19.9",
+    description: "适合更频繁使用与更高画质需求",
     features: [
-      "50 张 AI 创意照片",
-      "所有风格无限制",
-      "超高清画质输出",
-      "当天交付",
-      "1 对 1 专属客服",
-      "免费重制 3 次",
-      "赠送实体照片 5 张",
+      "每月赠送 60 积分",
+      "1K（标准模型）：1 积分/张",
+      "2K：4 积分/张；4K：5 积分/张",
+      "会员专享：可加购积分",
     ],
     popular: false,
   },
@@ -103,7 +96,7 @@ const Pricing = () => {
                   <span className="text-5xl font-bold text-foreground">
                     ¥{plan.price}
                   </span>
-                  <span className="text-muted-foreground">/次</span>
+                  <span className="text-muted-foreground">/月</span>
                 </div>
 
                 <ul className="space-y-4">
@@ -130,7 +123,7 @@ const Pricing = () => {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="w-full rounded-full bg-white border-[hsl(var(--brand-pink))]/30 cursor-pointer"
+                    className="w-full rounded-full bg-white dark:bg-card border-[hsl(var(--brand-pink))]/30 cursor-pointer"
                   >
                     {`选择${plan.name}`}
                   </Button>

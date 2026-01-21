@@ -11,7 +11,7 @@ export async function DELETE(
   try {
     const { id } = await params;
     const session = await auth();
-    const userId = (session?.user as any)?.id;
+    const userId = (session?.user as { id?: string } | undefined)?.id;
     if (!userId) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -49,4 +49,3 @@ export async function DELETE(
     );
   }
 }
-

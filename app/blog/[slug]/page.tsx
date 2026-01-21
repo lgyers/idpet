@@ -85,7 +85,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-950">
         <Loader className="w-12 h-12 animate-spin text-blue-600" />
       </div>
     );
@@ -93,7 +93,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
   if (error || !post) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-950">
         <div className="text-center">
           <p className="text-red-600 text-lg mb-4">{error}</p>
           <button
@@ -108,12 +108,12 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-900 dark:to-gray-950">
       {/* 顶部导航 */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 z-50 bg-white shadow-sm"
+        className="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-sm"
       >
         <div className="max-w-4xl mx-auto px-4 py-4">
           <Link
@@ -182,10 +182,10 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="prose prose-lg max-w-none mb-12"
+          className="prose prose-lg dark:prose-invert max-w-none mb-12"
         >
           <div
-            className="bg-white rounded-2xl shadow-lg p-8"
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </motion.article>
@@ -195,7 +195,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-white rounded-2xl shadow-lg p-8"
+          className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8"
         >
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-4">
@@ -204,7 +204,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
                   liked
                     ? "bg-red-100 text-red-600"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    : "bg-gray-100 dark:bg-gray-700/60 text-gray-600 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                 }`}
               >
                 <Heart className={`w-5 h-5 ${liked ? "fill-current" : ""}`} />
@@ -213,14 +213,14 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
               <button
                 onClick={handleShare}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700/60 text-gray-600 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all"
               >
                 <Share2 className="w-5 h-5" />
                 分享
               </button>
             </div>
 
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 dark:text-gray-300">
               最后更新：{formatDate(post.publishedAt)}
             </div>
           </div>
@@ -233,7 +233,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           transition={{ delay: 0.4 }}
           className="mt-12 text-center"
         >
-          <h3 className="text-2xl font-bold text-gray-900 mb-6">继续阅读</h3>
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">继续阅读</h3>
           <Link
             href="/blog"
             className="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all font-medium"

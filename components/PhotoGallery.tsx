@@ -5,27 +5,27 @@ import { useEffect, useRef, useState } from "react";
 const photos = [
   {
     id: 1,
-    image: "/assets/pet-business.jpg",
-    title: "职业证件照",
-    description: "专业商务形象，适合办公场景使用",
+    image: "/assets/examples/haimati/blue-id/cat-zhonghua-tianyuan-v1.png",
+    title: "蓝底证件照",
+    description: "纯蓝背景与均匀布光，干净规范，细节清晰",
   },
   {
     id: 2,
-    image: "/assets/pet-chef.jpg",
-    title: "职业角色 - 大厨",
-    description: "化身专业厨师，展现萌宠的烹饪天赋",
+    image: "/assets/examples/haimati/doctor/dog-golden-retriever-v3.png",
+    title: "医生职业照",
+    description: "白大褂与听诊器，专业又有趣，氛围不浮夸",
   },
   {
     id: 3,
-    image: "/assets/pet-traditional.jpg",
-    title: "传统文化风格",
-    description: "中国风汉服造型，尽显东方韵味",
+    image: "/assets/examples/haimati/wedding/cat-ragdoll-v1.png",
+    title: "婚纱摄影",
+    description: "影棚质感与浪漫光影，花艺点缀但不抢主体",
   },
   {
     id: 4,
-    image: "/assets/pet-astronaut.jpg",
-    title: "太空宇航员",
-    description: "探索星辰大海，开启宇宙之旅",
+    image: "/assets/examples/haimati/ironman/dog-corgi-v3.png",
+    title: "漫威钢铁侠",
+    description: "电影级光影与金属质感，酷炫出片，细节拉满",
   },
 ];
 
@@ -62,7 +62,7 @@ const PhotoGallery = () => {
             AI 创意照片展示
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            每一张都是独一无二的艺术作品
+            真实生成示例：背景、服饰、光影更不雷同
           </p>
         </div>
 
@@ -89,7 +89,7 @@ const PhotoGallery = () => {
               <div
                 key={photo.id}
                 className={`min-h-[80vh] flex items-center transition-opacity duration-500 ${
-                  activeIndex === index ? "opacity-100" : "opacity-40"
+                  activeIndex === index ? "opacity-100" : "opacity-70"
                 }`}
               >
                 <div className="space-y-6">

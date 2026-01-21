@@ -7,7 +7,7 @@ export const runtime = 'nodejs';
 export async function GET(request: NextRequest) {
   try {
     const session = await auth();
-    const userId = (session?.user as any)?.id;
+    const userId = (session?.user as { id?: string } | undefined)?.id;
     if (!userId) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
       }),
     ]);
 
-    const generations = records.map((r: any) => ({
+    const generations = records.map((r) => ({
       id: r.id,
       originalImageUrl: r.uploadedPhotoUrl,
       generatedImageUrl: r.resultImageUrl,
@@ -73,7 +73,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const session = await auth();
-    const userId = (session?.user as any)?.id;
+    const userId = (session?.user as { id?: string } | undefined)?.id;
     if (!userId) {
       return NextResponse.json(
         { error: 'Unauthorized' },

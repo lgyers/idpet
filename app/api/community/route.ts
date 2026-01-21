@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     const templateId = searchParams.get("templateId");
 
     const skip = (page - 1) * limit;
-    const where: any = {
+    const where: Prisma.CommunitySubmissionWhereInput = {
       approved: true,
     };
 

@@ -5,6 +5,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { verifyWebhookSignature } from '@/lib/stripe';
+import Stripe from 'stripe';
 
 export const runtime = 'nodejs';
 
@@ -22,7 +23,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 验证 webhook 签名
-    let event;
+    let event: Stripe.Event;
     try {
       event = verifyWebhookSignature(body, signature, webhookSecret);
     } catch (error) {
@@ -37,15 +38,15 @@ export async function POST(request: NextRequest) {
     switch (event.type) {
       case 'customer.subscription.created':
       case 'customer.subscription.updated':
-        await handleSubscriptionCreatedOrUpdated(event.data.object as any);
+        await handleSubscriptionCreatedOrUpdated(event.data.object as Stripe.Subscription);
         break;
 
       case 'customer.subscription.deleted':
-        await handleSubscriptionDeleted(event.data.object as any);
+        await handleSubscriptionDeleted(event.data.object as Stripe.Subscription);
         break;
 
       case 'invoice.payment_succeeded':
-        await handleInvoicePaymentSucceeded(event.data.object as any);
+        await handleInvoicePaymentSucceeded(event.data.object as Stripe.Invoice);
         break;
 
       default:
@@ -65,9 +66,15 @@ export async function POST(request: NextRequest) {
 /**
  * 处理订阅创建或更新事件
  */
-async function handleSubscriptionCreatedOrUpdated(subscription: any) {
+async function handleSubscriptionCreatedOrUpdated(subscription: Stripe.Subscription) {
   try {
-    const customerId = subscription.customer;
+    const customerId =
+      typeof subscription.customer === 'string'
+        ? subscription.customer
+        : subscription.customer?.id;
+    if (!customerId) {
+      return;
+    }
     const status = subscription.status;
     const subscriptionId = subscription.id;
 
@@ -84,7 +91,7 @@ async function handleSubscriptionCreatedOrUpdated(subscription: any) {
 
     // 确定订阅层级
     let tier = 'free';
-    const priceId = subscription.items.data[0]?.price.id;
+    const priceId = subscription.items.data[0]?.price?.id;
 
     if (process.env.STRIPE_PRICE_BASIC === priceId) {
       tier = 'basic';
@@ -119,9 +126,15 @@ async function handleSubscriptionCreatedOrUpdated(subscription: any) {
 /**
  * 处理订阅删除事件
  */
-async function handleSubscriptionDeleted(subscription: any) {
+async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
   try {
-    const customerId = subscription.customer;
+    const customerId =
+      typeof subscription.customer === 'string'
+        ? subscription.customer
+        : subscription.customer?.id;
+    if (!customerId) {
+      return;
+    }
 
     // 查找并更新用户订阅为免费
     const userSubscription = await prisma.userSubscription.findFirst({
@@ -149,12 +162,13 @@ async function handleSubscriptionDeleted(subscription: any) {
 /**
  * 处理发票支付成功事件
  */
-async function handleInvoicePaymentSucceeded(invoice: any) {
+async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
   try {
-    const customerId = invoice.customer;
-    const subscriptionId = invoice.subscription;
+    const customerId = typeof invoice.customer === 'string' ? invoice.customer : invoice.customer?.id;
+    const subscriptionId =
+      typeof invoice.subscription === 'string' ? invoice.subscription : invoice.subscription?.id;
 
-    console.log(`Invoice paid for subscription: ${subscriptionId}`);
+    console.log(`Invoice paid: customer=${customerId} subscription=${subscriptionId}`);
     // 可以在这里发送确认邮件或更新其他数据
   } catch (error) {
     console.error('Error handling invoice payment succeeded:', error);

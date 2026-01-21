@@ -12,14 +12,13 @@ export async function POST(request: NextRequest) {
   try {
     const session = await auth();
 
-    if (!session?.user?.email || !(session.user as any).id) {
+    const userId = (session?.user as { id?: string } | undefined)?.id;
+    if (!session?.user?.email || !userId) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       );
     }
-
-    const userId = (session.user as any).id;
 
     const body = await request.json();
     const { priceId, successUrl = '/dashboard', cancelUrl = '/pricing' } = body;

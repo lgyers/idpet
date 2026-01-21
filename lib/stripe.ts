@@ -10,7 +10,7 @@ if (!stripeSecretKey) {
 }
 
 export const stripe = new Stripe(stripeSecretKey || 'sk_test_dummy', {
-  apiVersion: '2025-02-24.acacia' as any,
+  apiVersion: '2025-02-24.acacia' as Stripe.StripeConfig["apiVersion"],
 });
 
 /**

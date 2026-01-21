@@ -71,15 +71,15 @@ const scenarios = [
 
 export default function FeaturesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-16 px-4">
+    <div className="min-h-screen bg-[image:var(--gradient-soft)] pt-32 pb-16 px-4">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl font-bold text-gray-900 mb-6">强大功能，简单易用</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h1 className="text-5xl font-bold text-foreground mb-6">强大功能，简单易用</h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             利用先进的 AI 技术，为您的宠物创造令人惊叹的照片
           </p>
         </motion.div>
@@ -93,16 +93,16 @@ export default function FeaturesPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow"
+                className="bg-[hsl(var(--glass-bg))] backdrop-blur-md border border-[hsl(var(--glass-border))] rounded-2xl shadow-card p-8 hover:bg-muted/40 transition-colors"
               >
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
                   <Icon className="w-8 h-8 text-blue-600" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">{feature.title}</h3>
-                <p className="text-gray-600 mb-6">{feature.description}</p>
+                <h3 className="text-2xl font-bold text-foreground mb-4">{feature.title}</h3>
+                <p className="text-muted-foreground mb-6">{feature.description}</p>
                 <ul className="space-y-2">
                   {feature.details.map((detail, detailIndex) => (
-                    <li key={detailIndex} className="flex items-center text-gray-700">
+                    <li key={detailIndex} className="flex items-center text-muted-foreground">
                       <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" />
                       <span className="text-sm">{detail}</span>
                     </li>
@@ -118,8 +118,8 @@ export default function FeaturesPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">丰富的场景模板</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-bold text-foreground mb-6">丰富的场景模板</h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             选择适合的场景，让 AI 为您的宠物创造独特的照片
           </p>
         </motion.div>
@@ -131,13 +131,13 @@ export default function FeaturesPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow"
+              className="bg-[hsl(var(--glass-bg))] backdrop-blur-md border border-[hsl(var(--glass-border))] rounded-2xl shadow-card p-8 hover:bg-muted/40 transition-colors"
             >
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">{scenario.title}</h3>
-              <p className="text-gray-600 mb-6">{scenario.description}</p>
+              <h3 className="text-2xl font-bold text-foreground mb-4">{scenario.title}</h3>
+              <p className="text-muted-foreground mb-6">{scenario.description}</p>
               <ul className="space-y-2">
                 {scenario.examples.map((example, exampleIndex) => (
-                  <li key={exampleIndex} className="flex items-center text-gray-700">
+                  <li key={exampleIndex} className="flex items-center text-muted-foreground">
                     <CheckCircle className="w-5 h-5 text-blue-500 mr-2 flex-shrink-0" />
                     <span className="text-sm">{example}</span>
                   </li>
@@ -153,14 +153,14 @@ export default function FeaturesPage() {
           transition={{ delay: 0.8 }}
           className="mt-20 text-center"
         >
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-12 text-white">
+          <div className="bg-[image:var(--gradient-warm)] rounded-2xl p-12 text-white shadow-card">
             <h2 className="text-3xl font-bold mb-4">准备好开始了吗？</h2>
             <p className="text-xl mb-8 opacity-90">立即上传照片，体验 AI 魔法</p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => window.location.href = "/upload"}
-              className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors"
+              className="bg-white/90 text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white transition-colors dark:bg-white/20 dark:text-white dark:hover:bg-white/30"
             >
               免费开始
             </motion.button>

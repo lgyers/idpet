@@ -4,13 +4,13 @@ import { motion } from "framer-motion";
 
 export function TermsOfServiceContent() {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+        <div className="min-h-screen bg-[image:var(--gradient-soft)]">
             <div className="container mx-auto px-4 py-16 max-w-4xl">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="bg-white rounded-2xl shadow-lg p-8 md:p-12"
+                    className="bg-[hsl(var(--glass-bg))] backdrop-blur-md border border-[hsl(var(--glass-border))] rounded-2xl shadow-card p-8 md:p-12 dark:[&_.text-gray-900]:text-foreground dark:[&_.text-gray-600]:text-muted-foreground dark:[&_.text-gray-500]:text-muted-foreground"
                 >
                     <h1 className="text-4xl font-bold text-gray-900 mb-8">服务条款</h1>
 
@@ -22,7 +22,7 @@ export function TermsOfServiceContent() {
                         <section className="mb-8">
                             <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. 接受条款</h2>
                             <p className="text-gray-600 mb-4">
-                                欢迎使用 PetPhoto AI（以下简称"服务"）。通过访问或使用我们的服务，您同意遵守本服务条款（以下简称"条款"）并具有法律约束力。
+                                欢迎使用 PetPhoto AI（以下简称“服务”）。通过访问或使用我们的服务，您同意遵守本服务条款（以下简称“条款”）并具有法律约束力。
                             </p>
                             <p className="text-gray-600">
                                 如果您不同意这些条款，请不要使用我们的服务。
@@ -126,7 +126,7 @@ export function TermsOfServiceContent() {
                         <section className="mb-8">
                             <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. 免责声明</h2>
                             <p className="text-gray-600 mb-4">
-                                服务按"现状"提供，不提供任何明示或暗示的保证。我们不保证：
+                                服务按“现状”提供，不提供任何明示或暗示的保证。我们不保证：
                             </p>
                             <ul className="list-disc pl-6 text-gray-600 space-y-2">
                                 <li>服务将不间断、及时、安全或无错误</li>

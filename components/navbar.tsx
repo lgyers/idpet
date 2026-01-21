@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { useSession, signOut } from "next-auth/react";
+import { useTheme } from "next-themes";
+import { Moon, Sun } from "lucide-react";
 
 const navItems = [
   { label: "首页", href: "/" },
@@ -20,9 +22,18 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { data: session, status } = useSession();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
+  const [themeMounted, setThemeMounted] = useState(false);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setThemeMounted(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  const isDark = themeMounted && resolvedTheme === "dark";
 
   return (
-    <nav className="fixed top-0 w-full bg-gray-100/60 dark:bg-gray-900/60 backdrop-blur-md border-b border-border z-50">
+    <nav className="sticky top-0 w-full bg-gray-100/60 dark:bg-gray-900/60 backdrop-blur-md border-b border-border z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
@@ -53,6 +64,14 @@ export function Navbar() {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center gap-4">
+            <button
+              type="button"
+              onClick={() => setTheme(isDark ? "light" : "dark")}
+              className="p-2 rounded-lg border border-border bg-[hsl(var(--glass-bg))] hover:bg-muted/60 transition-colors"
+              aria-label={isDark ? "切换到浅色模式" : "切换到深色模式"}
+            >
+              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
             {status === "loading" ? (
               <div className="h-10 w-20 bg-muted animate-pulse rounded-lg" />
             ) : session ? (
@@ -173,6 +192,15 @@ export function Navbar() {
               className="md:hidden border-t border-border overflow-hidden"
             >
               <div className="py-4 space-y-2">
+                <button
+                  type="button"
+                  onClick={() => setTheme(isDark ? "light" : "dark")}
+                  className="w-full px-4 py-2 flex items-center justify-between hover:bg-muted rounded-lg transition-colors"
+                  aria-label={isDark ? "切换到浅色模式" : "切换到深色模式"}
+                >
+                  <span className="text-sm text-foreground">主题</span>
+                  {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                </button>
                 {navItems.map((item) => (
                   <Link
                     key={item.href}

@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:seed": "prisma db seed"
+    "db:seed": "prisma db seed",
+    "examples:haimati": "node scripts/generate-haimati-examples.mjs"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",

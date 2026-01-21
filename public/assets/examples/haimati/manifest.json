@@ -1,0 +1,401 @@
+{
+  "generatedAt": "2026-01-13T04:13:46.351Z",
+  "items": [
+    {
+      "id": 1,
+      "title": "暹罗 · 百天照 #1",
+      "description": "猫暹罗，百天照风格（变化1）",
+      "category": "百天照",
+      "image": "/assets/examples/haimati/baityanzhao/cat-siamese-v1.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 2,
+      "title": "英短 · 百天照 #2",
+      "description": "猫英短，百天照风格（变化2）",
+      "category": "百天照",
+      "image": "/assets/examples/haimati/baityanzhao/cat-british-shorthair-v2.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 3,
+      "title": "柯基 · 百天照 #3",
+      "description": "狗柯基，百天照风格（变化3）",
+      "category": "百天照",
+      "image": "/assets/examples/haimati/baityanzhao/dog-corgi-v3.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 4,
+      "title": "田园犬 · 百天照 #4",
+      "description": "狗田园犬，百天照风格（变化4）",
+      "category": "百天照",
+      "image": "/assets/examples/haimati/baityanzhao/dog-chinese-rural-v4.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 5,
+      "title": "中华田园猫 · 蓝底证件照 #1",
+      "description": "猫中华田园猫，蓝底证件照风格（变化1）",
+      "category": "蓝底证件照",
+      "image": "/assets/examples/haimati/blue-id/cat-zhonghua-tianyuan-v1.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 6,
+      "title": "英短 · 蓝底证件照 #2",
+      "description": "猫英短，蓝底证件照风格（变化2）",
+      "category": "蓝底证件照",
+      "image": "/assets/examples/haimati/blue-id/cat-british-shorthair-v2.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 7,
+      "title": "柯基 · 蓝底证件照 #3",
+      "description": "狗柯基，蓝底证件照风格（变化3）",
+      "category": "蓝底证件照",
+      "image": "/assets/examples/haimati/blue-id/dog-corgi-v3.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 8,
+      "title": "拉布拉多 · 蓝底证件照 #4",
+      "description": "狗拉布拉多，蓝底证件照风格（变化4）",
+      "category": "蓝底证件照",
+      "image": "/assets/examples/haimati/blue-id/dog-labrador-v4.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 9,
+      "title": "中华田园猫 · 医生职业照 #1",
+      "description": "猫中华田园猫，医生职业照风格（变化1）",
+      "category": "医生职业照",
+      "image": "/assets/examples/haimati/doctor/cat-zhonghua-tianyuan-v1.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 10,
+      "title": "暹罗 · 医生职业照 #2",
+      "description": "猫暹罗，医生职业照风格（变化2）",
+      "category": "医生职业照",
+      "image": "/assets/examples/haimati/doctor/cat-siamese-v2.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 11,
+      "title": "金毛 · 医生职业照 #3",
+      "description": "狗金毛，医生职业照风格（变化3）",
+      "category": "医生职业照",
+      "image": "/assets/examples/haimati/doctor/dog-golden-retriever-v3.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 12,
+      "title": "柯基 · 医生职业照 #4",
+      "description": "狗柯基，医生职业照风格（变化4）",
+      "category": "医生职业照",
+      "image": "/assets/examples/haimati/doctor/dog-corgi-v4.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 13,
+      "title": "暹罗 · 学士服毕业照 #1",
+      "description": "猫暹罗，学士服毕业照风格（变化1）",
+      "category": "学士服毕业照",
+      "image": "/assets/examples/haimati/graduation/cat-siamese-v1.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 14,
+      "title": "布偶 · 学士服毕业照 #2",
+      "description": "猫布偶，学士服毕业照风格（变化2）",
+      "category": "学士服毕业照",
+      "image": "/assets/examples/haimati/graduation/cat-ragdoll-v2.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 15,
+      "title": "田园犬 · 学士服毕业照 #3",
+      "description": "狗田园犬，学士服毕业照风格（变化3）",
+      "category": "学士服毕业照",
+      "image": "/assets/examples/haimati/graduation/dog-chinese-rural-v3.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 16,
+      "title": "柯基 · 学士服毕业照 #4",
+      "description": "狗柯基，学士服毕业照风格（变化4）",
+      "category": "学士服毕业照",
+      "image": "/assets/examples/haimati/graduation/dog-corgi-v4.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 17,
+      "title": "布偶 · 唐装 #1",
+      "description": "猫布偶，唐装风格（变化1）",
+      "category": "唐装",
+      "image": "/assets/examples/haimati/tangzhuang/cat-ragdoll-v1.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 18,
+      "title": "暹罗 · 唐装 #2",
+      "description": "猫暹罗，唐装风格（变化2）",
+      "category": "唐装",
+      "image": "/assets/examples/haimati/tangzhuang/cat-siamese-v2.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 19,
+      "title": "柯基 · 唐装 #3",
+      "description": "狗柯基，唐装风格（变化3）",
+      "category": "唐装",
+      "image": "/assets/examples/haimati/tangzhuang/dog-corgi-v3.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 20,
+      "title": "金毛 · 唐装 #4",
+      "description": "狗金毛，唐装风格（变化4）",
+      "category": "唐装",
+      "image": "/assets/examples/haimati/tangzhuang/dog-golden-retriever-v4.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 21,
+      "title": "布偶 · 白领西装照 #1",
+      "description": "猫布偶，白领西装照风格（变化1）",
+      "category": "白领西装照",
+      "image": "/assets/examples/haimati/white-collar/cat-ragdoll-v1.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 22,
+      "title": "中华田园猫 · 白领西装照 #2",
+      "description": "猫中华田园猫，白领西装照风格（变化2）",
+      "category": "白领西装照",
+      "image": "/assets/examples/haimati/white-collar/cat-zhonghua-tianyuan-v2.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 23,
+      "title": "拉布拉多 · 白领西装照 #3",
+      "description": "狗拉布拉多，白领西装照风格（变化3）",
+      "category": "白领西装照",
+      "image": "/assets/examples/haimati/white-collar/dog-labrador-v3.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 24,
+      "title": "田园犬 · 白领西装照 #4",
+      "description": "狗田园犬，白领西装照风格（变化4）",
+      "category": "白领西装照",
+      "image": "/assets/examples/haimati/white-collar/dog-chinese-rural-v4.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 25,
+      "title": "暹罗 · 日系可爱风 #1",
+      "description": "猫暹罗，日系可爱风风格（变化1）",
+      "category": "日系可爱风",
+      "image": "/assets/examples/haimati/japanese-kawaii/cat-siamese-v1.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 26,
+      "title": "布偶 · 日系可爱风 #2",
+      "description": "猫布偶，日系可爱风风格（变化2）",
+      "category": "日系可爱风",
+      "image": "/assets/examples/haimati/japanese-kawaii/cat-ragdoll-v2.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 27,
+      "title": "田园犬 · 日系可爱风 #3",
+      "description": "狗田园犬，日系可爱风风格（变化3）",
+      "category": "日系可爱风",
+      "image": "/assets/examples/haimati/japanese-kawaii/dog-chinese-rural-v3.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 28,
+      "title": "柯基 · 日系可爱风 #4",
+      "description": "狗柯基，日系可爱风风格（变化4）",
+      "category": "日系可爱风",
+      "image": "/assets/examples/haimati/japanese-kawaii/dog-corgi-v4.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 29,
+      "title": "布偶 · 东方美学古韵风 #1",
+      "description": "猫布偶，东方美学古韵风风格（变化1）",
+      "category": "东方美学古韵风",
+      "image": "/assets/examples/haimati/oriental-aesthetic/cat-ragdoll-v1.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 30,
+      "title": "英短 · 东方美学古韵风 #2",
+      "description": "猫英短，东方美学古韵风风格（变化2）",
+      "category": "东方美学古韵风",
+      "image": "/assets/examples/haimati/oriental-aesthetic/cat-british-shorthair-v2.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 31,
+      "title": "拉布拉多 · 东方美学古韵风 #3",
+      "description": "狗拉布拉多，东方美学古韵风风格（变化3）",
+      "category": "东方美学古韵风",
+      "image": "/assets/examples/haimati/oriental-aesthetic/dog-labrador-v3.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 32,
+      "title": "金毛 · 东方美学古韵风 #4",
+      "description": "狗金毛，东方美学古韵风风格（变化4）",
+      "category": "东方美学古韵风",
+      "image": "/assets/examples/haimati/oriental-aesthetic/dog-golden-retriever-v4.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 33,
+      "title": "布偶 · 婚纱摄影 #1",
+      "description": "猫布偶，婚纱摄影风格（变化1）",
+      "category": "婚纱摄影",
+      "image": "/assets/examples/haimati/wedding/cat-ragdoll-v1.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 34,
+      "title": "暹罗 · 婚纱摄影 #2",
+      "description": "猫暹罗，婚纱摄影风格（变化2）",
+      "category": "婚纱摄影",
+      "image": "/assets/examples/haimati/wedding/cat-siamese-v2.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 35,
+      "title": "拉布拉多 · 婚纱摄影 #3",
+      "description": "狗拉布拉多，婚纱摄影风格（变化3）",
+      "category": "婚纱摄影",
+      "image": "/assets/examples/haimati/wedding/dog-labrador-v3.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 36,
+      "title": "金毛 · 婚纱摄影 #4",
+      "description": "狗金毛，婚纱摄影风格（变化4）",
+      "category": "婚纱摄影",
+      "image": "/assets/examples/haimati/wedding/dog-golden-retriever-v4.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 37,
+      "title": "暹罗 · 金婚照 #1",
+      "description": "猫暹罗，金婚照风格（变化1）",
+      "category": "金婚照",
+      "image": "/assets/examples/haimati/golden-wedding/cat-siamese-v1.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 38,
+      "title": "英短 · 金婚照 #2",
+      "description": "猫英短，金婚照风格（变化2）",
+      "category": "金婚照",
+      "image": "/assets/examples/haimati/golden-wedding/cat-british-shorthair-v2.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 39,
+      "title": "柯基 · 金婚照 #3",
+      "description": "狗柯基，金婚照风格（变化3）",
+      "category": "金婚照",
+      "image": "/assets/examples/haimati/golden-wedding/dog-corgi-v3.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 40,
+      "title": "拉布拉多 · 金婚照 #4",
+      "description": "狗拉布拉多，金婚照风格（变化4）",
+      "category": "金婚照",
+      "image": "/assets/examples/haimati/golden-wedding/dog-labrador-v4.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 41,
+      "title": "中华田园猫 · 漫威钢铁侠 #1",
+      "description": "猫中华田园猫，漫威钢铁侠风格（变化1）",
+      "category": "漫威钢铁侠",
+      "image": "/assets/examples/haimati/ironman/cat-zhonghua-tianyuan-v1.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 42,
+      "title": "英短 · 漫威钢铁侠 #2",
+      "description": "猫英短，漫威钢铁侠风格（变化2）",
+      "category": "漫威钢铁侠",
+      "image": "/assets/examples/haimati/ironman/cat-british-shorthair-v2.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 43,
+      "title": "柯基 · 漫威钢铁侠 #3",
+      "description": "狗柯基，漫威钢铁侠风格（变化3）",
+      "category": "漫威钢铁侠",
+      "image": "/assets/examples/haimati/ironman/dog-corgi-v3.png",
+      "likes": 0,
+      "downloads": 0
+    },
+    {
+      "id": 44,
+      "title": "拉布拉多 · 漫威钢铁侠 #4",
+      "description": "狗拉布拉多，漫威钢铁侠风格（变化4）",
+      "category": "漫威钢铁侠",
+      "image": "/assets/examples/haimati/ironman/dog-labrador-v4.png",
+      "likes": 0,
+      "downloads": 0
+    }
+  ]
+}

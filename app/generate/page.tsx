@@ -5,6 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, Sparkles, Upload } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface Template {
   id: string | number;
@@ -15,17 +18,28 @@ interface Template {
   prompt: string;
 }
 
+type GenerateProvider = "nano_banana_standard" | "nano_banana_pro";
+type ProImageSize = "1K" | "2K" | "4K";
+type ProAspectRatio = "1:1" | "4:3" | "3:4" | "16:9" | "9:16";
+
 function GenerateContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [templates, setTemplates] = useState<Template[]>([]);
   const [uploadedImage, setUploadedImage] = useState<string>("");
-  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null);
+
+  const handleTemplateSelect = (id: string) => {
+    setSelectedTemplateId(id);
+  };
   const [generating, setGenerating] = useState(false);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [progress, setProgress] = useState(0);
+  const [provider, setProvider] = useState<GenerateProvider>("nano_banana_standard");
+  const [proImageSize, setProImageSize] = useState<ProImageSize>("2K");
+  const [proAspectRatio, setProAspectRatio] = useState<ProAspectRatio>("1:1");
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -49,11 +63,23 @@ function GenerateContent() {
         const data = await res.json();
         if (res.ok) {
           setTemplates(data.templates || []);
+        } else {
+          setError(data.error || "模板加载失败，请稍后重试");
         }
-      } catch { }
+      } catch {
+        setError("模板加载失败，请稍后重试");
+      }
     };
     fetchTemplates();
   }, []);
+
+  useEffect(() => {
+    if (templates.length === 0) return;
+    const firstId = String(templates[0].id);
+    setSelectedTemplateId((prev) => prev || firstId);
+  }, [templates]);
+
+  const activeTemplate = templates.find((t) => String(t.id) === selectedTemplateId) ?? null;
 
   // 模拟生成进度
   useEffect(() => {
@@ -73,11 +99,12 @@ function GenerateContent() {
   }, [generating]);
 
   const handleGenerate = async () => {
-    if (!selectedTemplate || !uploadedImage) {
+    if (!activeTemplate || !uploadedImage) {
       setError("请选择场景模板");
       return;
     }
 
+    setGeneratedImage(null);
     setGenerating(true);
     setError("");
     setProgress(0);
@@ -91,9 +118,16 @@ function GenerateContent() {
         },
         body: JSON.stringify({
           uploadedImageUrl: uploadedImage,
-          templateId: selectedTemplate.id,
-          customPrompt: selectedTemplate.prompt,
+          templateId: String(activeTemplate.id),
+          templateName: activeTemplate.name,
+          templateDescription: activeTemplate.description,
+          templateCategory: activeTemplate.category,
+          templatePreview: activeTemplate.preview,
+          customPrompt: activeTemplate.prompt,
           resolution: "medium", // 免费用户使用中等分辨率
+          provider,
+          proImageSize: provider === "nano_banana_pro" ? proImageSize : undefined,
+          proAspectRatio: provider === "nano_banana_pro" ? proAspectRatio : undefined,
         }),
       });
 
@@ -117,14 +151,26 @@ function GenerateContent() {
   };
 
   const handleReset = () => {
-    setSelectedTemplate(null);
     setGeneratedImage(null);
     setError("");
     setProgress(0);
   };
 
-  const handleDownload = () => {
-    if (generatedImage) {
+  const handleDownload = async () => {
+    if (!generatedImage) return;
+    try {
+      const response = await fetch(generatedImage);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `pet-photo-${Date.now()}.png`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Download failed:', error);
       window.open(generatedImage, "_blank");
     }
   };
@@ -139,6 +185,15 @@ function GenerateContent() {
       </div>
     );
   }
+
+  const providerOptions: Array<{
+    value: GenerateProvider;
+    title: string;
+    subtitle: string;
+  }> = [
+    { value: "nano_banana_standard", title: "Nano Banana", subtitle: "标准版" },
+    { value: "nano_banana_pro", title: "Banana Pro", subtitle: "可选分辨率" },
+  ];
 
   return (
     <div className="min-h-screen bg-[image:var(--gradient-soft)] pt-24 pb-8 px-4">
@@ -169,12 +224,10 @@ function GenerateContent() {
                   className="object-contain rounded-lg"
                 />
               </div>
-              <button
-                onClick={() => router.push("/upload")}
-                className="w-full px-4 py-2 border border-border text-foreground rounded-lg hover:bg-muted/50 transition-colors"
-              >
+              <Button variant="glass" className="w-full rounded-xl" onClick={() => router.push("/upload")} disabled={generating}>
+                <Upload className="h-4 w-4" />
                 重新上传
-              </button>
+              </Button>
             </div>
           </motion.div>
 
@@ -188,28 +241,149 @@ function GenerateContent() {
             <div className="bg-[hsl(var(--glass-bg))] backdrop-blur-md border border-[hsl(var(--glass-border))] rounded-2xl shadow-card p-6">
               <h2 className="text-xl font-semibold text-foreground mb-4">选择场景模板</h2>
 
-              <div className="grid grid-cols-2 gap-3 max-h-96 overflow-y-auto">
-                {templates.map((template) => (
-                  <motion.div
-                    key={template.id}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => setSelectedTemplate(template)}
-                    className={`cursor-pointer rounded-lg border-2 p-3 transition-all ${selectedTemplate?.id === template.id
-                      ? "border-[hsl(var(--brand-pink))] bg-[hsl(var(--brand-pink))]/5"
-                      : "border-border hover:border-[hsl(var(--brand-pink))]/50"
-                      }`}
-                  >
-                    <div className="relative w-full h-24 mb-2">
-                      <Image src={template.preview} alt={template.name} fill className="object-cover rounded" />
+              <div className="mb-4 space-y-3">
+                <div>
+                  <div className="text-sm font-medium text-foreground mb-2">生成引擎</div>
+                  <div className="rounded-xl border border-[hsl(var(--glass-border))] bg-background/30 p-1">
+                    <div className="grid grid-cols-2 gap-1">
+                      {providerOptions.map((opt) => {
+                        const active = provider === opt.value;
+                        return (
+                          <button
+                            key={opt.value}
+                            type="button"
+                            onClick={() => setProvider(opt.value)}
+                            disabled={generating}
+                            aria-pressed={active}
+                            className={cn(
+                              "relative w-full overflow-hidden rounded-lg px-3 py-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-60",
+                              "hover:bg-muted/40 active:bg-muted/50",
+                            )}
+                          >
+                            {active && (
+                              <motion.div
+                                layoutId="provider-pill"
+                                transition={{ type: "spring", stiffness: 520, damping: 38 }}
+                                className="absolute inset-0 rounded-lg border border-[hsl(var(--brand-pink))]/35 bg-[hsl(var(--brand-pink))]/10 shadow-[0_10px_26px_-14px_hsl(var(--brand-pink)/0.55)]"
+                              />
+                            )}
+                            <div className="relative z-10">
+                              <div className="flex items-center justify-between gap-2">
+                                <div className="text-sm font-semibold text-foreground">{opt.title}</div>
+                              </div>
+                              <div className="mt-0.5 text-[11px] text-muted-foreground">{opt.subtitle}</div>
+                            </div>
+                          </button>
+                        );
+                      })}
                     </div>
-                    <h3 className="font-medium text-sm text-foreground">{template.name}</h3>
-                    <p className="text-xs text-muted-foreground mt-1">{template.description}</p>
-                    <span className="inline-block mt-2 px-2 py-1 text-xs bg-muted text-muted-foreground rounded">
-                      {template.category}
-                    </span>
+                  </div>
+                </div>
+
+                {provider === "nano_banana_pro" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="rounded-xl border border-[hsl(var(--glass-border))] bg-background/30 p-3"
+                  >
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1.5">
+                        <div className="text-xs font-medium text-muted-foreground">Pro 分辨率</div>
+                        <div className="relative">
+                          <select
+                            value={proImageSize}
+                            onChange={(e) => setProImageSize(e.target.value as ProImageSize)}
+                            disabled={generating}
+                            className="h-10 w-full appearance-none rounded-lg border border-border bg-background/20 pl-3 pr-9 text-sm text-foreground outline-none focus:ring-2 focus:ring-ring disabled:opacity-60"
+                          >
+                            <option value="1K">1K</option>
+                            <option value="2K">2K</option>
+                            <option value="4K">4K</option>
+                          </select>
+                          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        </div>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <div className="text-xs font-medium text-muted-foreground">宽高比</div>
+                        <div className="relative">
+                          <select
+                            value={proAspectRatio}
+                            onChange={(e) => setProAspectRatio(e.target.value as ProAspectRatio)}
+                            disabled={generating}
+                            className="h-10 w-full appearance-none rounded-lg border border-border bg-background/20 pl-3 pr-9 text-sm text-foreground outline-none focus:ring-2 focus:ring-ring disabled:opacity-60"
+                          >
+                            <option value="1:1">1:1</option>
+                            <option value="4:3">4:3</option>
+                            <option value="3:4">3:4</option>
+                            <option value="16:9">16:9</option>
+                            <option value="9:16">9:16</option>
+                          </select>
+                          <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        </div>
+                      </div>
+                    </div>
                   </motion.div>
-                ))}
+                )}
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 max-h-96 overflow-y-auto">
+                {templates.length === 0 ? (
+                  <div className="col-span-2 rounded-lg border border-[hsl(var(--glass-border))] bg-background/30 p-4 text-sm text-muted-foreground">
+                    模板加载中…如果长时间无内容，请检查数据库连接或稍后重试。
+                  </div>
+                ) : (
+                  templates.map((template) => {
+                    const id = String(template.id);
+                    const isSelected = selectedTemplateId === id;
+
+                    return (
+                      <motion.button
+                        key={template.id}
+                        type="button"
+                        whileHover={{ y: -2 }}
+                        whileTap={{ scale: 0.985 }}
+                        onClick={() => handleTemplateSelect(id)}
+                        disabled={generating}
+                        aria-pressed={isSelected}
+                        className={cn(
+                          "group relative overflow-hidden rounded-xl border bg-background/25 p-3 text-left transition-[border-color,box-shadow,transform] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-60",
+                          "hover:border-[hsl(var(--brand-pink))]/55 hover:shadow-[0_18px_36px_-22px_hsl(var(--brand-pink)/0.6)]",
+                          isSelected
+                            ? "border-[hsl(var(--brand-pink))]/90 bg-[hsl(var(--brand-pink))]/14 shadow-[0_20px_44px_-26px_hsl(var(--brand-pink)/0.75)] ring-2 ring-[hsl(var(--brand-coral))]/30"
+                            : "border-border ring-1 ring-transparent",
+                        )}
+                      >
+                        {isSelected && (
+                          <motion.div
+                            layoutId="template-selected"
+                            transition={{ type: "spring", stiffness: 520, damping: 40 }}
+                            className="absolute inset-0 rounded-xl bg-[hsl(var(--brand-pink))]/12"
+                          />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/12 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                        
+                        <div className="relative z-10">
+                          <div className="flex items-center justify-between gap-2">
+                            <h3 className="font-semibold text-sm text-foreground">{template.name}</h3>
+                          </div>
+                          <div className="relative w-full h-24 mb-2">
+                            <Image
+                              src={template.preview}
+                              alt={template.name}
+                              fill
+                              className={cn(
+                                "object-cover rounded transition-[filter,opacity] duration-200",
+                                isSelected ? "opacity-100" : "opacity-90",
+                              )}
+                            />
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-1 truncate">{template.description}</p>
+                        </div>
+                      </motion.button>
+                    );
+                  })
+                )}
               </div>
 
               {error && (
@@ -219,13 +393,18 @@ function GenerateContent() {
               )}
 
               {!generating && !generatedImage && (
-                <button
-                  onClick={handleGenerate}
-                  disabled={!selectedTemplate}
-                  className="w-full mt-6 px-6 py-3 bg-[image:var(--gradient-warm)] text-white rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[hsl(var(--brand-coral))]/20"
-                >
-                  开始生成
-                </button>
+                <Button asChild variant="hero" size="lg" className="w-full mt-6 rounded-xl">
+                  <motion.button
+                    onClick={handleGenerate}
+                    disabled={!activeTemplate || generating}
+                    whileHover={{ scale: 1.015 }}
+                    whileTap={{ scale: 0.985 }}
+                    className="shadow-[0_18px_40px_-24px_hsl(var(--brand-coral)/0.7)]"
+                  >
+                    <Sparkles className="h-4 w-4" />
+                    开始生成
+                  </motion.button>
+                </Button>
               )}
             </div>
           </motion.div>
@@ -261,7 +440,10 @@ function GenerateContent() {
                       </div>
                     </div>
                     <p className="text-foreground">AI正在创作中...</p>
-                    <p className="text-sm text-muted-foreground mt-2">请稍候，这需要30-60秒</p>
+                    <p className="text-sm text-muted-foreground mt-2 max-w-[80%] mx-auto">
+                      生成过程可能需要几分钟，受网络波动影响可能更久。<br />
+                      您可以稍后在<span className="text-[hsl(var(--brand-coral))] font-medium cursor-pointer hover:underline" onClick={() => router.push('/history')}>个人中心-历史记录</span>中查看和下载。
+                    </p>
                   </motion.div>
                 )}
 
@@ -281,18 +463,23 @@ function GenerateContent() {
                       />
                     </div>
                     <div className="space-y-3">
-                      <button
+                      <Button
+                        variant="default"
+                        className="w-full rounded-xl bg-[hsl(var(--brand-sage))] text-white hover:bg-[hsl(var(--brand-sage))]/90"
                         onClick={handleDownload}
-                        className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                       >
                         下载图片
-                      </button>
-                      <button
-                        onClick={handleReset}
-                        className="w-full px-4 py-2 border border-border text-foreground rounded-lg hover:bg-muted/50 transition-colors"
-                      >
-                        重新生成
-                      </button>
+                      </Button>
+                      <div className="grid grid-cols-2 gap-3">
+                        <Button variant="glass" className="w-full rounded-xl" onClick={handleReset} disabled={generating}>
+                          更换模板
+                        </Button>
+                        <Button asChild variant="hero" className="w-full rounded-xl">
+                          <motion.button onClick={handleGenerate} whileHover={{ scale: 1.015 }} whileTap={{ scale: 0.985 }}>
+                            再生成一张
+                          </motion.button>
+                        </Button>
+                      </div>
                     </div>
                   </motion.div>
                 )}
