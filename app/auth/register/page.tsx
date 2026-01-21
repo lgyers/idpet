@@ -72,7 +72,10 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[image:var(--gradient-soft)] px-4 py-12">
+    <div 
+      className="min-h-screen flex items-center justify-center bg-background px-4 py-12 transition-colors duration-300"
+      style={{ backgroundImage: 'var(--gradient-soft)' }}
+    >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -100,7 +103,7 @@ export default function RegisterPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 bg-background/50 border border-border rounded-lg focus:ring-2 focus:ring-[hsl(var(--brand-pink))] focus:border-transparent outline-none transition-all"
+              className="w-full px-4 py-2 bg-background/50 dark:bg-black/20 border border-border dark:border-white/10 rounded-lg focus:ring-2 focus:ring-[hsl(var(--brand-pink))] focus:border-transparent outline-none transition-all placeholder:text-muted-foreground"
               placeholder="your@email.com"
               required
             />
@@ -115,7 +118,7 @@ export default function RegisterPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 bg-background/50 border border-border rounded-lg focus:ring-2 focus:ring-[hsl(var(--brand-pink))] focus:border-transparent outline-none transition-all"
+              className="w-full px-4 py-2 bg-background/50 dark:bg-black/20 border border-border dark:border-white/10 rounded-lg focus:ring-2 focus:ring-[hsl(var(--brand-pink))] focus:border-transparent outline-none transition-all placeholder:text-muted-foreground"
               placeholder="至少6位字符"
               required
             />
@@ -130,7 +133,7 @@ export default function RegisterPage() {
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-2 bg-background/50 border border-border rounded-lg focus:ring-2 focus:ring-[hsl(var(--brand-pink))] focus:border-transparent outline-none transition-all"
+              className="w-full px-4 py-2 bg-background/50 dark:bg-black/20 border border-border dark:border-white/10 rounded-lg focus:ring-2 focus:ring-[hsl(var(--brand-pink))] focus:border-transparent outline-none transition-all placeholder:text-muted-foreground"
               placeholder="再次输入密码"
               required
             />

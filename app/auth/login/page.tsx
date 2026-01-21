@@ -44,7 +44,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background bg-[image:var(--gradient-soft)] px-4 py-12">
+    <div 
+      className="min-h-screen flex items-center justify-center bg-background px-4 py-12 transition-colors duration-300"
+      style={{ backgroundImage: 'var(--gradient-soft)' }}
+    >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -72,7 +75,7 @@ export default function LoginPage() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 bg-background/50 border border-border rounded-lg focus:ring-2 focus:ring-[hsl(var(--brand-pink))] focus:border-transparent outline-none transition-all"
+            className="w-full px-4 py-2 bg-background/50 dark:bg-black/20 border border-border dark:border-white/10 rounded-lg focus:ring-2 focus:ring-[hsl(var(--brand-pink))] focus:border-transparent outline-none transition-all placeholder:text-muted-foreground"
             placeholder="your@email.com"
             required
           />
@@ -87,7 +90,7 @@ export default function LoginPage() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 bg-background/50 border border-border rounded-lg focus:ring-2 focus:ring-[hsl(var(--brand-pink))] focus:border-transparent outline-none transition-all"
+            className="w-full px-4 py-2 bg-background/50 dark:bg-black/20 border border-border dark:border-white/10 rounded-lg focus:ring-2 focus:ring-[hsl(var(--brand-pink))] focus:border-transparent outline-none transition-all placeholder:text-muted-foreground"
             placeholder="••••••••"
             required
           />
