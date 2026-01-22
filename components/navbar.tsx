@@ -31,6 +31,10 @@ export function Navbar() {
   }, []);
 
   const isDark = themeMounted && resolvedTheme === "dark";
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    window.location.href = "/";
+  };
 
   return (
     <nav className="sticky top-0 w-full bg-gray-100/60 dark:bg-gray-900/60 backdrop-blur-md border-b border-border z-50">
@@ -126,7 +130,7 @@ export function Navbar() {
                         生成历史
                       </Link>
                       <button
-                        onClick={() => signOut()}
+                        onClick={handleSignOut}
                         className="block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                       >
                         退出登录
@@ -245,7 +249,7 @@ export function Navbar() {
                         控制台
                       </Link>
                       <button
-                        onClick={() => signOut()}
+                        onClick={handleSignOut}
                         className="block w-full text-left px-4 py-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                       >
                         退出登录
