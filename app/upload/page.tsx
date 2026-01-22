@@ -13,7 +13,7 @@ export default function UploadPage() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
-  const maxUploadBytes = 20 * 1024 * 1024;
+  const maxUploadBytes = 4 * 1024 * 1024;
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -40,9 +40,9 @@ export default function UploadPage() {
       return;
     }
 
-    // 验证文件大小 (最大 20MB)
+    // 验证文件大小 (最大 4MB)
     if (file.size > maxUploadBytes) {
-      setError("文件大小不能超过 20MB");
+      setError("文件大小不能超过 4MB");
       return;
     }
 
@@ -143,7 +143,7 @@ export default function UploadPage() {
                     {isDragActive ? "松开鼠标上传文件" : "拖拽图片到此处或点击上传"}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    支持 PNG, JPG, JPEG, WebP 格式，最大 20MB
+                    支持 PNG, JPG, JPEG, WebP 格式，最大 4MB
                   </p>
                 </div>
               </div>

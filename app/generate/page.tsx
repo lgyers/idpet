@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Sparkles, Upload } from "lucide-react";
+import { ChevronDown, Sparkles, Upload, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -40,6 +40,15 @@ function GenerateContent() {
   const [provider, setProvider] = useState<GenerateProvider>("nano_banana_standard");
   const [proImageSize, setProImageSize] = useState<ProImageSize>("2K");
   const [proAspectRatio, setProAspectRatio] = useState<ProAspectRatio>("1:1");
+  const [loadingTip, setLoadingTip] = useState("");
+
+  const LOADING_TIPS = [
+    "AI正在观察你的宠物...",
+    "正在构思创意场景...",
+    "正在绘制画面细节...",
+    "正在调整光影效果...",
+    "马上就好，请稍候...",
+  ];
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -81,20 +90,32 @@ function GenerateContent() {
 
   const activeTemplate = templates.find((t) => String(t.id) === selectedTemplateId) ?? null;
 
-  // 模拟生成进度
+  // 模拟生成进度和提示语
   useEffect(() => {
     if (generating) {
+      setLoadingTip(LOADING_TIPS[0]);
+      let tipIndex = 0;
+      
+      const tipInterval = setInterval(() => {
+        tipIndex = (tipIndex + 1) % LOADING_TIPS.length;
+        setLoadingTip(LOADING_TIPS[tipIndex]);
+      }, 3000);
+
       const interval = setInterval(() => {
         setProgress((prev) => {
-          if (prev >= 90) {
-            clearInterval(interval);
-            return 90;
+          if (prev >= 95) {
+            return 95;
           }
-          return prev + 10;
+          // 越接近95%越慢
+          const increment = Math.max(1, (95 - prev) / 20);
+          return prev + increment;
         });
-      }, 500);
+      }, 200);
 
-      return () => clearInterval(interval);
+      return () => {
+        clearInterval(interval);
+        clearInterval(tipInterval);
+      };
     }
   }, [generating]);
 
@@ -392,7 +413,7 @@ function GenerateContent() {
                 </div>
               )}
 
-              {!generating && !generatedImage && (
+              {!generating && (
                 <Button asChild variant="hero" size="lg" className="w-full mt-6 rounded-xl">
                   <motion.button
                     onClick={handleGenerate}
@@ -402,7 +423,7 @@ function GenerateContent() {
                     className="shadow-[0_18px_40px_-24px_hsl(var(--brand-coral)/0.7)]"
                   >
                     <Sparkles className="h-4 w-4" />
-                    开始生成
+                    {generatedImage ? "使用新模板生成" : "开始生成"}
                   </motion.button>
                 </Button>
               )}
@@ -428,18 +449,40 @@ function GenerateContent() {
                     className="text-center py-12"
                   >
                     <div className="relative w-32 h-32 mx-auto mb-6">
-                      <div className="absolute inset-0 rounded-full border-4 border-muted"></div>
-                      <div
-                        className="absolute inset-0 rounded-full border-4 border-[hsl(var(--brand-coral))]"
+                      {/* 背景圆环 */}
+                      <div className="absolute inset-0 rounded-full border-4 border-muted/30"></div>
+                      {/* 旋转的加载圆环 */}
+                      <motion.div
+                        className="absolute inset-0 rounded-full border-4 border-transparent"
                         style={{
+                          borderTopColor: "hsl(var(--brand-coral))",
+                          borderRightColor: "hsl(var(--brand-coral))"
+                        }}
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      ></motion.div>
+                      {/* 进度圆环 - 视觉辅助 */}
+                      <div
+                        className="absolute inset-0 rounded-full border-4 border-transparent"
+                        style={{
+                          borderColor: "hsl(var(--brand-coral) / 0.3)",
                           clipPath: `inset(0 ${100 - progress}% 0 0)`,
+                          transition: "clip-path 0.2s ease-out"
                         }}
                       ></div>
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-[hsl(var(--brand-coral))]">{progress}%</span>
+                        <Sparkles className="w-8 h-8 text-[hsl(var(--brand-coral))]" />
                       </div>
                     </div>
-                    <p className="text-foreground">AI正在创作中...</p>
+                    <motion.p 
+                      key={loadingTip}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="text-lg font-medium text-foreground min-h-[28px]"
+                    >
+                      {loadingTip}
+                    </motion.p>
                     <p className="text-sm text-muted-foreground mt-2 max-w-[80%] mx-auto">
                       生成过程可能需要几分钟，受网络波动影响可能更久。<br />
                       您可以稍后在<span className="text-[hsl(var(--brand-coral))] font-medium cursor-pointer hover:underline" onClick={() => router.push('/history')}>个人中心-历史记录</span>中查看和下载。
@@ -465,20 +508,15 @@ function GenerateContent() {
                     <div className="space-y-3">
                       <Button
                         variant="default"
-                        className="w-full rounded-xl bg-[hsl(var(--brand-sage))] text-white hover:bg-[hsl(var(--brand-sage))]/90"
+                        size="lg"
+                        className="w-full rounded-xl bg-[hsl(var(--brand-coral))] text-white hover:bg-[hsl(var(--brand-coral))]/90 shadow-lg shadow-[hsl(var(--brand-coral))]/20 mb-2 transition-all hover:scale-[1.02]"
                         onClick={handleDownload}
                       >
+                        <Download className="mr-2 h-5 w-5" />
                         下载图片
                       </Button>
-                      <div className="grid grid-cols-2 gap-3">
-                        <Button variant="glass" className="w-full rounded-xl" onClick={handleReset} disabled={generating}>
-                          更换模板
-                        </Button>
-                        <Button asChild variant="hero" className="w-full rounded-xl">
-                          <motion.button onClick={handleGenerate} whileHover={{ scale: 1.015 }} whileTap={{ scale: 0.985 }}>
-                            再生成一张
-                          </motion.button>
-                        </Button>
+                      <div className="grid grid-cols-1 gap-3">
+                        {/* 左侧已有生成按钮，此处不再重复，只保留下载 */}
                       </div>
                     </div>
                   </motion.div>

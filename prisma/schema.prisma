@@ -116,8 +116,9 @@ model GenerationRecord {
   template          SceneTemplate @relation(fields: [templateId], references: [id])
   templateId        String
 
-  resultImageUrl    String
-  generatedPrompt   String    @db.Text
+  resultImageUrl    String?
+  generatedPrompt   String?   @db.Text
+  status            String    @default("COMPLETED") // "PENDING" | "COMPLETED" | "FAILED"
 
   quotaUsed         Int       @default(1)
 

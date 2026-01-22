@@ -35,43 +35,48 @@ async function nanoBananaStandardEdit(params: {
   imageUrl: string;
 }): Promise<{ mimeType: string; base64: string }> {
   const { apiKey, baseUrl, prompt, imageUrl } = params;
-  const response = await fetch(`${baseUrl}/v1/chat/completions`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'gemini-2.5-flash-image',
-      stream: false,
-      messages: [
-        {
-          role: 'user',
-          content: [
-            { type: 'text', text: prompt },
-            { type: 'image_url', image_url: { url: imageUrl } },
-          ],
+  const input = await fetchAsBase64(imageUrl);
+  if (input.size > 10 * 1024 * 1024) {
+    throw new Error('File size exceeds 10MB limit');
+  }
+  const response = await fetch(
+    `${baseUrl}/v1beta/models/gemini-3-pro-image-preview:generateContent`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              { text: prompt },
+              { inline_data: { mime_type: input.mimeType, data: input.base64 } },
+            ],
+          },
+        ],
+        generationConfig: {
+          responseModalities: ['IMAGE'],
+          imageConfig: {
+            aspectRatio: '1:1',
+            imageSize: '1K',
+          },
         },
-      ],
-    }),
-  });
-
+      }),
+    }
+  );
   const data = await response.json().catch(() => null);
   if (!response.ok) {
     const message = data?.error?.message || data?.error || response.statusText;
     throw new Error(message);
   }
-
-  const content = data?.choices?.[0]?.message?.content;
-  if (typeof content !== 'string') {
+  const base64 = data?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+  const mimeType = data?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.mimeType || 'image/png';
+  if (typeof base64 !== 'string') {
     throw new Error('Invalid response format');
   }
-
-  const extracted = extractBase64ImageFromContent(content);
-  if (!extracted) {
-    throw new Error('No base64 image found in response');
-  }
-  return extracted;
+  return { mimeType, base64 };
 }
 
 async function nanoBananaProEdit(params: {
@@ -215,7 +220,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (provider === 'nano_banana_standard') {
+    if (provider === 'nano_banana_standard' && subscription.tier === 'free') {
       const used = await prisma.generationRecord.count({
         where: {
           userId,
@@ -311,6 +316,27 @@ export async function POST(request: NextRequest) {
     // 准备提示词
     const finalPrompt = customPrompt || template.basePrompt;
 
+    // 创建初始生成记录（状态为 PENDING）
+    let record = await prisma.generationRecord.create({
+      data: {
+        userId: userId,
+        uploadedPhotoUrl: uploadedImageUrl,
+        templateId,
+        generatedPrompt: finalPrompt,
+        resultImageUrl: '',
+        status: 'PENDING',
+        quotaUsed: 1,
+      },
+      include: {
+        template: {
+          select: {
+            name: true,
+            category: true,
+          },
+        },
+      },
+    });
+
     // 返回立即响应，但在后台继续处理
     // 为了演示，这里我们会等待生成完成（实际生产环境应该异步处理）
     let generatedImageUrl: string | null = null;
@@ -368,6 +394,12 @@ export async function POST(request: NextRequest) {
     }
 
     if (error) {
+      // 更新失败状态
+      await prisma.generationRecord.update({
+        where: { id: record.id },
+        data: { status: 'FAILED' }
+      });
+
       return NextResponse.json(
         { error: `Generation failed: ${error}` },
         { status: 500 }
@@ -375,21 +407,24 @@ export async function POST(request: NextRequest) {
     }
 
     if (!generatedImageUrl) {
+      // 更新失败状态
+      await prisma.generationRecord.update({
+        where: { id: record.id },
+        data: { status: 'FAILED' }
+      });
+
       return NextResponse.json(
         { error: 'No image generated' },
         { status: 500 }
       );
     }
 
-    // 保存生成记录
-    const record = await prisma.generationRecord.create({
+    // 更新成功状态
+    record = await prisma.generationRecord.update({
+      where: { id: record.id },
       data: {
-        userId: userId,
-        uploadedPhotoUrl: uploadedImageUrl,
-        templateId,
         resultImageUrl: generatedImageUrl,
-        generatedPrompt: finalPrompt,
-        quotaUsed: 1,
+        status: 'COMPLETED'
       },
       include: {
         template: {
@@ -411,7 +446,7 @@ export async function POST(request: NextRequest) {
         templateName: record.template?.name || '',
         prompt: record.generatedPrompt,
         createdAt: record.createdAt,
-        status: 'completed',
+        status: record.status,
       },
     });
   } catch (error) {

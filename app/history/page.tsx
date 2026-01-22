@@ -90,6 +90,37 @@ export default function HistoryPage() {
     });
   };
 
+  const getStatusBadge = (status: string) => {
+    const s = status.toUpperCase();
+    if (s === "COMPLETED") {
+      return (
+        <span className="px-2 py-1 text-xs bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200 rounded-full">
+          已完成
+        </span>
+      );
+    }
+    if (s === "FAILED") {
+      return (
+        <span className="px-2 py-1 text-xs bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-200 rounded-full">
+          失败
+        </span>
+      );
+    }
+    return (
+      <span className="px-2 py-1 text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-200 rounded-full flex items-center gap-1">
+        <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-pulse"></span>
+        处理中
+      </span>
+    );
+  };
+
+  const getStatusText = (status: string) => {
+    const s = status.toUpperCase();
+    if (s === "COMPLETED") return "已完成";
+    if (s === "FAILED") return "失败";
+    return "处理中";
+  };
+
   if (status === "loading" || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-950">
@@ -194,21 +225,31 @@ export default function HistoryPage() {
                     >
                       <div className="flex items-start space-x-4">
                         <div className="relative w-20 h-20 flex-shrink-0">
-                          <Image
-                            src={generation.generatedImageUrl}
-                            alt={generation.templateName}
-                            fill
-                            className="object-cover rounded"
-                          />
+                          {generation.status?.toUpperCase() === 'COMPLETED' && generation.generatedImageUrl ? (
+                            <Image
+                              src={generation.generatedImageUrl}
+                              alt={generation.templateName}
+                              fill
+                              className="object-cover rounded"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gray-100 dark:bg-gray-800 rounded flex items-center justify-center">
+                              {generation.status?.toUpperCase() === 'FAILED' ? (
+                                <svg className="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                              ) : (
+                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                              )}
+                            </div>
+                          )}
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex justify-between items-start mb-2">
                             <h3 className="font-semibold text-gray-900 dark:text-white truncate">
                               {generation.templateName}
                             </h3>
-                            <span className="px-2 py-1 text-xs bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200 rounded-full">
-                              {generation.status === "completed" ? "已完成" : "处理中"}
-                            </span>
+                            {getStatusBadge(generation.status)}
                           </div>
                           <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
                             {formatDate(generation.createdAt)}

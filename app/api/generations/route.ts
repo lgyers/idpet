@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
       templateName: r.template?.name || '',
       prompt: r.generatedPrompt,
       createdAt: r.createdAt,
-      status: 'completed',
+      status: r.status || 'completed',
     }));
 
     return NextResponse.json({

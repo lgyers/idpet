@@ -6,7 +6,7 @@ import sharp from 'sharp';
 export const runtime = 'nodejs';
 export const maxDuration = 60;
 
-const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
+const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
 export async function POST(request: NextRequest) {
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     // Validate file size
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
-        { error: 'File size exceeds 20MB limit' },
+        { error: 'File size exceeds 4MB limit' },
         { status: 400 }
       );
     }
